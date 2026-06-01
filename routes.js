@@ -29,7 +29,13 @@ router.post('/signup', async (req, res) => {
     req.session.error = 'Password must be at least 6 characters.';
     return res.redirect('/signup');
   }
-  const result = await auth.registerUser(name, email, password);
+  let result;
+  try {
+    result = await auth.registerUser(name, email, password);
+  } catch (err) {
+    req.session.error = 'Signup failed. Check your Airtable setup.';
+    return res.redirect('/signup');
+  }
   if (!result.success) {
     req.session.error = result.error;
     return res.redirect('/signup');
@@ -118,7 +124,7 @@ router.post('/clients/add', auth.requireAuth, async (req, res) => {
     Name: name,
     Email: email,
     UserID: req.session.user.id,
-    CreatedAt: new Date().toISOString()
+    CreatedAt: new Date().toISOString().split('T')[0]
   });
   req.session.success = 'Client added successfully!';
   res.redirect('/clients');
@@ -180,7 +186,7 @@ router.post('/invoices/add', auth.requireAuth, async (req, res) => {
     Status: 'pending',
     ReminderCount: 0,
     Notes: notes || '',
-    CreatedAt: new Date().toISOString()
+    CreatedAt: new Date().toISOString().split('T')[0]
   });
   req.session.success = 'Invoice added!';
   res.redirect('/invoices');

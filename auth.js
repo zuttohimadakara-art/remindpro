@@ -14,7 +14,7 @@ async function registerUser(name, email, password) {
     Email: email,
     Password: hashed,
     SubscriptionStatus: 'trial',
-    CreatedAt: new Date().toISOString()
+    CreatedAt: new Date().toISOString().split('T')[0]
   });
   return { success: true, user };
 }
