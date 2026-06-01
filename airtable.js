@@ -1,6 +1,6 @@
 const Airtable = require('airtable');
 
-const apiKey = process.env.AIRTABLE_PERSONAL_ACCESS_TOKEN;
+const apiKey = process.env.AIRTABLE_PAT;
 const baseId = process.env.AIRTABLE_BASE_ID;
 
 if (!apiKey || !baseId) {
