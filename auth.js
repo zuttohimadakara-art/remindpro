@@ -13,8 +13,7 @@ async function registerUser(name, email, password) {
     Name: name,
     Email: email,
     Password: hashed,
-    SubscriptionStatus: 'trial',
-    CreatedAt: new Date().toISOString().split('T')[0]
+    SubscriptionStatus: 'trial'
   });
   return { success: true, user };
 }

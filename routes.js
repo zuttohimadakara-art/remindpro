@@ -123,8 +123,7 @@ router.post('/clients/add', auth.requireAuth, async (req, res) => {
   await airtable.createClient({
     Name: name,
     Email: email,
-    UserID: req.session.user.id,
-    CreatedAt: new Date().toISOString().split('T')[0]
+    UserID: req.session.user.id
   });
   req.session.success = 'Client added successfully!';
   res.redirect('/clients');
@@ -185,8 +184,7 @@ router.post('/invoices/add', auth.requireAuth, async (req, res) => {
     DueDate: due_date,
     Status: 'pending',
     ReminderCount: 0,
-    Notes: notes || '',
-    CreatedAt: new Date().toISOString().split('T')[0]
+    Notes: notes || ''
   });
   req.session.success = 'Invoice added!';
   res.redirect('/invoices');
