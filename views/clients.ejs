@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clients - RemindPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% include partials/nav %>
+
+  <div class="page-content">
+    <div class="container">
+
+      <% if (error) { %><div class="flash flash-error"><%= error %></div><% } %>
+      <% if (success) { %><div class="flash flash-success"><%= success %></div><% } %>
+
+      <div class="page-header">
+        <div>
+          <h1>Clients</h1>
+          <p class="subtitle"><%= clients.length %> client(s)</p>
+        </div>
+        <a href="/clients/add" class="btn btn-primary">+ Add Client</a>
+      </div>
+
+      <% if (clients.length === 0) { %>
+      <div class="table-wrap">
+        <div class="empty-state">
+          No clients yet. <a href="/clients/add">Add your first client</a>.
+        </div>
+      </div>
+      <% } else { %>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% clients.forEach(function(client) { %>
+            <tr>
+              <td><strong><%= client.Name %></strong></td>
+              <td><%= client.Email || '—' %></td>
+              <td class="actions">
+                <a href="/clients/<%= client.id %>/edit" class="btn btn-outline btn-sm">Edit</a>
+                <form method="POST" action="/clients/<%= client.id %>/delete" style="display:inline;" onsubmit="return confirm('Delete this client?')">
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<nav>
+  <div class="container">
+    <a href="/" class="brand">RemindPro</a>
+    <% if (user) { %>
+    <div class="nav-right">
+      <span><%= user.Name %></span>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/clients">Clients</a>
+      <a href="/invoices">Invoices</a>
+      <a href="/reminders">Reminders</a>
+      <% if (user.SubscriptionStatus === 'trial') { %>
+        <a href="/subscribe" style="color:#e94560;font-weight:700;">Subscribe</a>
+      <% } %>
+      <a href="/logout">Logout</a>
+    </div>
+    <% } else { %>
+    <div class="nav-right">
+      <a href="/login">Login</a>
+      <a href="/signup" style="background:#e94560;padding:8px 18px;border-radius:8px;margin-left:10px;">Get Started</a>
+    </div>
+    <% } %>
+  </div>
+</nav>

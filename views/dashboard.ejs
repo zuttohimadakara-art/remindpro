@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - RemindPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% include partials/nav %>
+
+  <div class="page-content">
+    <div class="container">
+
+      <% if (error) { %><div class="flash flash-error"><%= error %></div><% } %>
+      <% if (success) { %><div class="flash flash-success"><%= success %></div><% } %>
+
+      <% if (user.SubscriptionStatus === 'trial') { %>
+      <div class="alert alert-info">
+        You're on a 14-day free trial.
+        <a href="/subscribe" style="font-weight:700;color:#1a1a2e;">Subscribe here</a> to keep access after your trial ends.
+      </div>
+      <% } %>
+
+      <h1>Dashboard</h1>
+      <p class="text-muted">Welcome back, <%= user.Name %></p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Invoices</h3>
+          <div class="number blue"><%= totalInvoices %></div>
+        </div>
+        <div class="stat-card">
+          <h3>Pending</h3>
+          <div class="number orange"><%= pending %></div>
+        </div>
+        <div class="stat-card">
+          <h3>Overdue</h3>
+          <div class="number red"><%= overdue %></div>
+        </div>
+        <div class="stat-card">
+          <h3>Paid</h3>
+          <div class="number green"><%= paidInvoices %></div>
+        </div>
+        <div class="stat-card">
+          <h3>Outstanding</h3>
+          <div class="number red">$<%= totalOutstanding.toFixed(2) %></div>
+        </div>
+        <div class="stat-card">
+          <h3>Collected</h3>
+          <div class="number green">$<%= totalCollected.toFixed(2) %></div>
+        </div>
+      </div>
+
+      <div class="page-header" style="margin-top:10px;">
+        <div>
+          <h2>Recent Invoices</h2>
+        </div>
+        <a href="/invoices/add" class="btn btn-primary btn-sm">+ New Invoice</a>
+      </div>
+
+      <% if (recentInvoices.length === 0) { %>
+      <div class="table-wrap">
+        <div class="empty-state">
+          No invoices yet. <a href="/invoices/add">Add your first invoice</a>.
+        </div>
+      </div>
+      <% } else { %>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Due Date</th>
+              <th>Status</th>
+              <th>Reminders</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% recentInvoices.forEach(function(inv) { %>
+            <tr>
+              <td><strong>$<%= parseFloat(inv.Amount || 0).toFixed(2) %></strong></td>
+              <td><%= inv.DueDate || '—' %></td>
+              <td><span class="badge badge-<%= inv.Status === 'paid' ? 'paid' : inv.Status === 'overdue' ? 'overdue' : 'pending' %>"><%= inv.Status || 'pending' %></span></td>
+              <td><%= inv.ReminderCount || 0 %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+    </div>
+  </div>
+</body>
+</html>

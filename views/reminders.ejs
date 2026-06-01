@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reminders - RemindPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% include partials/nav %>
+
+  <div class="page-content">
+    <div class="container">
+
+      <% if (error) { %><div class="flash flash-error"><%= error %></div><% } %>
+      <% if (success) { %><div class="flash flash-success"><%= success %></div><% } %>
+
+      <div class="page-header">
+        <div>
+          <h1>Reminder Log</h1>
+          <p class="subtitle">History of email reminders sent</p>
+        </div>
+      </div>
+
+      <% if (reminders.length === 0) { %>
+      <div class="table-wrap">
+        <div class="empty-state">
+          No reminders sent yet. Go to <a href="/invoices">Invoices</a> to send your first email reminder.
+        </div>
+      </div>
+      <% } else { %>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Client</th>
+              <th>Invoice</th>
+              <th>Status</th>
+              <th>To</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% reminders.forEach(function(r) { %>
+            <tr>
+              <td><%= r.SentAt ? new Date(r.SentAt).toLocaleDateString() + ' ' + new Date(r.SentAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '—' %></td>
+              <td><%= r.ClientName || '—' %></td>
+              <td><%= r.InvoiceAmount ? '$' + parseFloat(r.InvoiceAmount).toFixed(2) : '—' %></td>
+              <td><span class="badge badge-<%= r.Status %>"><%= r.Status %></span></td>
+              <td><%= r.SentTo || '—' %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+    </div>
+  </div>
+</body>
+</html>

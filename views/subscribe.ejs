@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscribe - RemindPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% include partials/nav %>
+
+  <div class="page-content">
+    <div class="container">
+
+      <% if (error) { %><div class="flash flash-error"><%= error %></div><% } %>
+      <% if (success) { %><div class="flash flash-success"><%= success %></div><% } %>
+
+      <div style="max-width:500px;margin:0 auto;text-align:center;">
+        <h1 style="margin-bottom:10px;">Subscribe to RemindPro</h1>
+        <p class="text-muted" style="margin-bottom:30px;">Keep your reminders running and get paid faster.</p>
+
+        <div style="background:#fff;border-radius:12px;padding:35px;box-shadow:0 1px 8px rgba(0,0,0,0.06);margin-bottom:20px;">
+          <div style="font-size:48px;font-weight:800;color:#1a1a2e;">$29</div>
+          <div style="color:#666;margin-bottom:20px;">per month</div>
+
+          <div style="text-align:left;margin-bottom:25px;">
+            <p style="padding:6px 0;">&checkmark; Unlimited clients</p>
+            <p style="padding:6px 0;">&checkmark; Unlimited invoices</p>
+            <p style="padding:6px 0;">&checkmark; Auto email reminders every 48h</p>
+            <p style="padding:6px 0;">&checkmark; Manual one-click reminders</p>
+            <p style="padding:6px 0;">&checkmark; Reminder history log</p>
+            <p style="padding:6px 0;">&checkmark; Cancel anytime</p>
+          </div>
+
+          <form method="POST" action="/subscribe/checkout">
+            <button type="submit" class="btn btn-primary btn-block" style="padding:14px;">Subscribe Now</button>
+          </form>
+        </div>
+
+        <p class="text-muted" style="font-size:13px;">
+          You're on trial. After subscribing, your trial converts immediately to a paid plan.
+        </p>
+        <p style="margin-top:15px;">
+          <a href="/dashboard" class="btn btn-outline">Back to Dashboard</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

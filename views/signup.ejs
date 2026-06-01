@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - RemindPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="logo-text">RemindPro</div>
+      <h1>Start your free trial</h1>
+      <p>14 days free. No credit card required.</p>
+
+      <% if (error) { %><div class="flash flash-error"><%= error %></div><% } %>
+      <% if (success) { %><div class="flash flash-success"><%= success %></div><% } %>
+
+      <form method="POST" action="/signup">
+        <div class="form-group">
+          <label for="name">Business Name</label>
+          <input type="text" id="name" name="name" required autofocus>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label for="confirm">Confirm Password</label>
+          <input type="password" id="confirm" name="confirm" required minlength="6">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+      </form>
+
+      <p style="text-align:center;margin-top:20px;font-size:14px;color:#666;">
+        Already have an account? <a href="/login" style="color:#1a1a2e;font-weight:600;">Log in</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= client ? 'Edit' : 'Add' %> Client - RemindPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% include partials/nav %>
+
+  <div class="page-content">
+    <div class="container">
+
+      <% if (error) { %><div class="flash flash-error"><%= error %></div><% } %>
+
+      <div class="page-header">
+        <h1><%= client ? 'Edit Client' : 'Add Client' %></h1>
+        <a href="/clients" class="btn btn-outline btn-sm">&larr; Back</a>
+      </div>
+
+      <div class="form-card">
+        <form method="POST" action="<%= client ? '/clients/' + client.id + '/edit' : '/clients/add' %>">
+          <div class="form-group">
+            <label for="name">Client Name *</label>
+            <input type="text" id="name" name="name" value="<%= client ? client.Name : '' %>" required autofocus>
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" value="<%= client ? client.Email : '' %>" required>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary"><%= client ? 'Save Changes' : 'Add Client' %></button>
+            <a href="/clients" class="btn btn-outline">Cancel</a>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Subscription - RemindPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% include partials/nav %>
+
+  <div class="page-content">
+    <div class="container">
+
+      <% if (error) { %><div class="flash flash-error"><%= error %></div><% } %>
+      <% if (success) { %><div class="flash flash-success"><%= success %></div><% } %>
+
+      <div style="max-width:500px;margin:0 auto;text-align:center;">
+        <h1 style="margin-bottom:10px;">Subscription</h1>
+        <p class="text-muted" style="margin-bottom:30px;">
+          Status: <strong style="color:#0f9b58;text-transform:capitalize;"><%= user.SubscriptionStatus %></strong>
+        </p>
+
+        <div style="background:#fff;border-radius:12px;padding:35px;box-shadow:0 1px 8px rgba(0,0,0,0.06);">
+          <p style="margin-bottom:20px;">You are on the <strong>$29/month</strong> plan.</p>
+
+          <form method="POST" action="/manage-subscription/portal">
+            <button type="submit" class="btn btn-primary btn-block">Manage Billing</button>
+          </form>
+          <p class="text-muted" style="margin-top:12px;font-size:13px;">
+            Opens Stripe billing portal to update payment method or cancel.
+          </p>
+        </div>
+
+        <p style="margin-top:20px;">
+          <a href="/dashboard" class="btn btn-outline">Back to Dashboard</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

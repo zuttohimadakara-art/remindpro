@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoices - RemindPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% include partials/nav %>
+
+  <div class="page-content">
+    <div class="container">
+
+      <% if (error) { %><div class="flash flash-error"><%= error %></div><% } %>
+      <% if (success) { %><div class="flash flash-success"><%= success %></div><% } %>
+
+      <div class="page-header">
+        <div>
+          <h1>Invoices</h1>
+          <p class="subtitle"><%= invoices.length %> invoice(s)</p>
+        </div>
+        <a href="/invoices/add" class="btn btn-primary">+ New Invoice</a>
+      </div>
+
+      <% if (invoices.length === 0) { %>
+      <div class="table-wrap">
+        <div class="empty-state">
+          No invoices yet. <a href="/invoices/add">Add your first invoice</a>.
+        </div>
+      </div>
+      <% } else { %>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Amount</th>
+              <th>Due Date</th>
+              <th>Status</th>
+              <th>Reminders</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% invoices.forEach(function(inv) { %>
+            <tr>
+              <td><strong><%= inv.ClientName %></strong></td>
+              <td><strong>$<%= parseFloat(inv.Amount || 0).toFixed(2) %></strong></td>
+              <td><%= inv.DueDate || '—' %></td>
+              <td>
+                <% if (inv.Status === 'pending' && inv.DueDate && new Date(inv.DueDate) < new Date()) { %>
+                  <span class="badge badge-overdue">overdue</span>
+                <% } else { %>
+                  <span class="badge badge-<%= inv.Status === 'paid' ? 'paid' : 'pending' %>"><%= inv.Status %></span>
+                <% } %>
+              </td>
+              <td><%= inv.ReminderCount || 0 %></td>
+              <td class="actions">
+                <% if (inv.Status !== 'paid') { %>
+                <form method="POST" action="/invoices/<%= inv.id %>/send-reminder" class="inline-form">
+                  <button type="submit" class="btn btn-success btn-sm">Email Reminder</button>
+                </form>
+                <form method="POST" action="/invoices/<%= inv.id %>/mark-paid" class="inline-form">
+                  <button type="submit" class="btn btn-primary btn-sm">Mark Paid</button>
+                </form>
+                <% } %>
+                <a href="/invoices/<%= inv.id %>/edit" class="btn btn-outline btn-sm">Edit</a>
+                <form method="POST" action="/invoices/<%= inv.id %>/delete" class="inline-form" onsubmit="return confirm('Delete this invoice?')">
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+    </div>
+  </div>
+</body>
+</html>
