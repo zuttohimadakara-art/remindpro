@@ -257,7 +257,6 @@ router.post('/invoices/:id/send-reminder', auth.requireAuth, async (req, res) =>
       SentTo: client.Email,
       Message: message,
       Status: result.success ? 'sent' : 'failed',
-      SentAt: new Date().toISOString(),
       Error: result.error || ''
     });
 

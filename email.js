@@ -13,12 +13,13 @@ let transporter = null;
 if (host && user && pass) {
   transporter = nodemailer.createTransport({
     host,
-    port,
-    secure: port === 465,
+    port: 587,
+    secure: false,
+    requireTLS: true,
     auth: { user, pass },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 15000
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 20000
   });
 } else {
   console.warn('WARNING: SMTP not configured. Emails will be logged to console only.');

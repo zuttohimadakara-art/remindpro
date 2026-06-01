@@ -39,11 +39,10 @@ async function checkOverdueReminders() {
       await airtable.createReminder({
         InvoiceID: invoice.id,
         UserID: invoice.UserID,
-        SentTo: client.Email,
-        Message: message,
-        Status: result.success ? 'sent' : 'failed',
-        SentAt: now.toISOString(),
-        Error: result.error || ''
+      SentTo: client.Email,
+      Message: message,
+      Status: result.success ? 'sent' : 'failed',
+      Error: result.error || ''
       });
 
       if (result.success) {
