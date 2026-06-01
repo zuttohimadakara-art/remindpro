@@ -1,4 +1,6 @@
 const nodemailer = require('nodemailer');
+const dns = require('dns');
+dns.setDefaultResultOrder('ipv4first');
 
 const host = process.env.SMTP_HOST;
 const port = parseInt(process.env.SMTP_PORT || '587');
@@ -13,7 +15,10 @@ if (host && user && pass) {
     host,
     port,
     secure: port === 465,
-    auth: { user, pass }
+    auth: { user, pass },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000
   });
 } else {
   console.warn('WARNING: SMTP not configured. Emails will be logged to console only.');
